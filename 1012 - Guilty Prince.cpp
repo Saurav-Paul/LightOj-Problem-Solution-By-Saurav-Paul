@@ -23,7 +23,7 @@ int main()
                 cin>>lands[i][j];
                 if(lands[i][j]=='@')
                 {
-                    x=j;
+                    x=j; 
                     y=i;
                 }
 
