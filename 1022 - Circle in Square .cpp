@@ -15,4 +15,4 @@ while(tcase--){
     printf("%.2lf\n",ans);
 }
 return 0;
-}
+} 
