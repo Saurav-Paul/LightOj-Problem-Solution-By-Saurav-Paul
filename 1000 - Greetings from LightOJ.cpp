@@ -8,3 +8,4 @@ while(tcase--){
    cout<<"Case "<<++cnt<<": "<<n1+n2<<endl;
 }
 }
+ 
