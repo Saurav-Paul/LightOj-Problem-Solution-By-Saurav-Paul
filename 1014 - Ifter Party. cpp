@@ -1,0 +1,55 @@
+		/* Saurav Paul */
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void solve(int cn){
+  
+  int l , p ;
+  scanf("%d%d",&p,&l);
+  vector<int> ans ; 
+  
+  int lft = p-l ;
+  int sqroot = sqrt(lft) ;
+  for(int i = 1 ; i<= sqroot ; i++){
+		if(lft%i==0){
+			if(i == lft/i){
+				if(i > l)
+					ans.emplace_back(i);
+		}
+		else{
+			int x = lft/i;
+			if(i > l){
+			  ans.emplace_back(i);
+			}
+			if(x > l){
+			  ans.emplace_back(x);
+			}	
+		}
+	}
+    
+  }
+  sort(ans.begin() , ans.end() );
+  
+  printf("Case %d:",cn);
+  if((int)ans.size()==0)
+    	puts(" impossible");
+  else{
+    for(int x : ans)
+      	printf(" %d",x);
+    puts("");
+  }
+  
+}
+
+int main() {
+  
+  int t ; 
+  scanf("%d",&t);
+  for(int i = 1 ; i <= t ; i++){
+    solve(i);
+  }
+  
+  
+  return 0;
+}
