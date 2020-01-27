@@ -64,22 +64,22 @@ void solve() {
         s[x][y] = '.';
         break;
       }
-      if (check(x,y+1,c) && vis[x][y+1]==0)
+      if (check(x,y+1,c))
       {
         t = {{x, y+1}, w + 1};
         Q.push(t);
       }
-      if (check(x, y - 1, c) && vis[x][y - 1] == 0)
+      if (check(x, y - 1, c))
       {
         t = {{x, y - 1}, w + 1};
         Q.push(t);
       }
-      if (check(x + 1, y, c) && vis[x + 1][y] == 0)
+      if (check(x + 1, y, c))
       {
         t = {{x + 1, y}, w + 1};
         Q.push(t);
       }
-      if (check(x - 1, y, c) && vis[x - 1][y] == 0)
+      if (check(x - 1, y, c))
       {
         t = {{x - 1, y}, w + 1};
         Q.push(t);
