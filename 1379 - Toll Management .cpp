@@ -22,7 +22,7 @@ void solve () {
     vector < int> scost(node + 1, INT_MAX) , tcost(node + 1 , INT_MAX) ;
     scost[s] = 0 ;
 
-    queue<int> Q;
+    queue<int> Q; 
     Q.push(s);
     while(!Q.empty()){
         int top = Q.front() ;
