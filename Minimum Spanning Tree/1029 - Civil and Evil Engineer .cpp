@@ -21,8 +21,8 @@ class TC{
     vector<pair<int,int>> graph[nax] ;
 
     int minimum_spanning_tree(int mul){
-priority_queue<pair<int,int>> PQ ;
 
+        priority_queue<pair<int,int>> PQ ;
         for(auto to : graph[0]){
             PQ.push({to.second*mul,to.first}) ;
         }
