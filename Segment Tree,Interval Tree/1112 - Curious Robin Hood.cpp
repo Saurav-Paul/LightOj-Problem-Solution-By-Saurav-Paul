@@ -1,70 +1,111 @@
+  
+/**
+ *    author        : Saurav Paul 
+ *    created       : 26/07/2022 22:57:27
+ *    Problem Name  : Curious Robin Hood
+ *    Problem Limit : 2000 ms , 128 MB
+ *    Problem Url   : https://lightoj.com/problem/curious-robin-hood
+ *    @genarated by : ai-virtual-assistant
+**/
+
 #include<bits/stdc++.h>
 using namespace std;
-using vec = vector <int> ;
 
-int query_tree(vec & tree, int l , int r){
-	int sum = 0;
-	while(l < r){
-		if(l&1)
-			sum += tree[l++];
-		if(r&1)
-			sum += tree[--r];
-		
-		l >>=1 , r >>=1;
+using ll = long long int ;
+
+
+class BIT {
+    vector<long long int> tree ;
+
+	public:
+
+    BIT(long long int n){
+        tree.assign(n+1, 0) ;
+    }
+
+	void add(long long int index, long long int value)
+	{
+		while(index <= tree.size()){
+            tree[index] += value;
+            index += index & (-index) ;
+        }
 	}
-	return sum;
-}
 
-void update_tree(vec &tree, int index, int value,bool add){
-	
-	if(add==false)
-		printf("%d\n",tree[index]);
-	tree[index] = add ? tree[index] + value : 0;
-	while(index > 1){
-		tree[index>>1] = tree[index] + tree[index^1];
-		index >>=1;
-	}
-	
-	
-}
-
-void solve(int caseno){
-	int n, q;
-	scanf("%d%d",&n,&q);
-	vec tree(2*n);
-	for(int i = 0 ; i < n; i++)
-		scanf("%d",&tree[n+i]);
-		
-	for(int i = n- 1; i > 0 ; i--)
-		tree[i] = tree[i<<1] + tree[i<<1|1];
-	printf("Case %d:\n",caseno);
-	while(q--){
-		int op; scanf("%d",&op);
-		switch(op){
-			case 1 :
-				int indx; scanf("%d",&indx);
-				update_tree(tree,indx+n,0,false);
-				break;
-			case 2 :
-				int index,value ; scanf("%d%d",&index,&value);
-				update_tree(tree,index+n,value,true);
-				break;
-			case 3 :
-				int l , r; scanf("%d%d",&l,&r);
-				int ans = query_tree(tree,l+n,r+n+1);
-				printf("%d\n",ans);
-				break ;
-			
+	void remove(long long int index, long long int removeValue)
+	{
+		while(index <= tree.size()){
+			tree[index] -= removeValue;
+			index += index & (-index);
 		}
 	}
-}
+
+	long long int sum(long long int st, long long int sp)
+	{
+		return query(sp) - query(st - 1) ;
+	}
+
+	long long int query(long long int idx)
+	{
+		long long int sum = 0 ;
+        while(idx > 0){
+            sum += tree[idx] ;
+            idx -= idx & (-idx) ;
+        }
+        return sum ;
+	}
+};
+
+class TC{
+
+    public :
+    void solve(){
+		long long int n, q;
+		cin >> n >> q;
+
+		BIT magic_box(n) ;
+		vector<long long int> v(n + 1);
+
+		for(int i = 1 ; i <= n ; i++){
+			long long int val;
+			cin >> val;
+			magic_box.add(i,val) ;
+			v[i] = val ;
+		}
+
+		while(q--){
+			long long int type;
+			cin >> type;
+			long long int idx, value, st, sp;
+			switch(type){
+				case 1:
+				 	cin >> idx;
+					magic_box.remove(idx + 1, v[idx+1]) ;
+					cout << v[idx + 1] << endl;
+					v[idx+1] = 0 ;
+					break;
+				case 2:
+					cin >> idx >> value;
+					magic_box.add(idx + 1, value);
+					v[idx + 1] += value ;
+					break;
+				case 3:
+					cin >> st >> sp;
+					cout << magic_box.sum(st + 1, sp + 1) << endl ;
+			}
+		}
+    }
+};
 
 int main(){
-	
-	int testcase,caseno= 0;
-	scanf("%d",&testcase);
-	while(testcase--)
-		solve(++caseno);
-		
-	return 0;
+    ios_base::sync_with_stdio(false);
+
+    int testcases = 1;
+    cin >> testcases ;
+    for(int i = 1 ; i <= testcases ; i ++){
+		cout << "Case " << i << ":" << endl;
+        TC tc;
+        tc.solve() ;
+    }
+
+    return 0 ;
 }
